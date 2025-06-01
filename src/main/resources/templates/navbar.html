@@ -6,11 +6,43 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">RollerSpeed</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="aspirantesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Aspirantes
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="aspirantesDropdown">
+                                <li><a class="dropdown-item" th:href="@{/aspirantes/nuevo}">Nuevo</a></li>
+                                <li><a class="dropdown-item" th:href="@{/aspirantes/lista}">Lista</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="clasesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Clases
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="clasesDropdown">
+                                <li><a class="dropdown-item" th:href="@{/clases/nueva}">Nueva</a></li>
+                                <li><a class="dropdown-item" th:href="@{/clases/lista}">Lista</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="instructoresDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Instructores
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="instructoresDropdown">
+                                <li><a class="dropdown-item" th:href="@{/instructores/nuevo}">Nuevo</a></li>
+                                <li><a class="dropdown-item" th:href="@{/instructores/lista}">Lista</a></li>
+                            </ul>
+                        </li>
+
                         <li class="nav-item"><a class="nav-link" th:href="@{/mision}">Misión</a></li>
                         <li class="nav-item"><a class="nav-link" th:href="@{/vision}">Visión</a></li>
                         <li class="nav-item"><a class="nav-link" th:href="@{/valores}">Valores</a></li>

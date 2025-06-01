@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Lista de Métodos de Pago</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Métodos de Pago</h2>
+        <a th:href="@{/metodos_pago/nuevo}" class="btn btn-primary">+ Nuevo Método de Pago</a>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body">
+
+            <table class="table table-striped table-hover">
+                <thead class="table-primary">
+                    <tr>
+                        <th>ID</th>
+                        <th>Tipo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="medioPago : ${mediosPago}">
+                        <td th:text="${medioPago.id}">1</td>
+                        <td th:text="${medioPago.tipo}">Tarjeta</td>
+                        <td>
+                            <a th:href="@{/metodos_pago/editar/{id}(id=${medioPago.id})}" class="btn btn-warning btn-sm">Editar</a>
+                            <a th:href="@{/metodos_pago/eliminar/{id}(id=${medioPago.id})}" class="btn btn-danger btn-sm"
+                               onclick="return confirm('¿Está seguro que desea eliminar este método de pago?');">Eliminar</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(mediosPago)}">
+                        <td colspan="3" class="text-center">No hay métodos de pago registrados.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
