@@ -7,6 +7,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "tbl_usuarios")
 public class Usuario {
 
@@ -19,6 +20,9 @@ public class Usuario {
 
     @Column(name = "e_mail", nullable = false, length = 100, unique = true)
     private String email;
+
+   @Column(nullable = false)
+    private String telefono;
 
     @Column(nullable = false, length = 50)
     private String password;
