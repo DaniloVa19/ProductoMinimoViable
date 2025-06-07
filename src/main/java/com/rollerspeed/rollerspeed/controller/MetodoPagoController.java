@@ -30,6 +30,20 @@ public class MetodoPagoController {
         return "redirect:/metodos_pago/lista";
     }
 
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
+        MetodoPago metodoPago = metodoPagoService.obtenerMetodoPagoPorId(id)
+                .orElseThrow(() -> new IllegalArgumentException("Método de pago no encontrado: " + id));
+        model.addAttribute("medioPago", metodoPago);
+        return "medio_pago_form";
+    }
+
+    @GetMapping("/eliminar/{id}")
+    public String eliminarMetodoPago(@PathVariable Long id) {
+        metodoPagoService.eliminarMetodoPago(id);
+        return "redirect:/metodos_pago/lista";
+    }
+
     @GetMapping("/lista")
     public String listarMetodosPago(Model model) {
         model.addAttribute("mediosPago", metodoPagoService.listarMetodosPago());
