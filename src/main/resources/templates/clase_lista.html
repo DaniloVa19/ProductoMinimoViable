@@ -35,8 +35,11 @@
                         <td th:text="${clase.instructor.nombre}">Juan Pérez</td>
                         <td>
                             <a th:href="@{/clases/editar/{id}(id=${clase.id})}" class="btn btn-warning btn-sm">Editar</a>
-                            <a th:href="@{/clases/eliminar/{id}(id=${clase.id})}" class="btn btn-danger btn-sm"
-                               onclick="return confirm('¿Estás seguro de eliminar esta clase?');">Eliminar</a>
+                            <form th:action="@{/clases/eliminar/{id}(id=${clase.id})}" method="post" th:object="${clase}" class="d-inline"
+                                onsubmit="return confirm('¿Estás seguro de eliminar esta clase?');">
+                                <input type="hidden" name="_method" value="delete"/>
+                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                            </form>
                         </td>
                     </tr>
                     <tr th:if="${#lists.isEmpty(clases)}">
