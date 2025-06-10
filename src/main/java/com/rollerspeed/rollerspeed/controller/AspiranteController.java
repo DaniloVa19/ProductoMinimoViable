@@ -6,6 +6,13 @@ import com.rollerspeed.rollerspeed.model.MetodoPago;
 import com.rollerspeed.rollerspeed.service.AspiranteService;
 import com.rollerspeed.rollerspeed.service.AlumnoService;
 import com.rollerspeed.rollerspeed.service.MetodoPagoService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@Tag(name = "Aspirantes", description = "Operaciones para gestionar aspirantes y convertirlos en alumnos")
 @Controller
 @RequestMapping("/aspirantes")
 public class AspiranteController {
@@ -27,6 +35,15 @@ public class AspiranteController {
     @Autowired
     private AlumnoService alumnoService;
 
+
+    @Operation(
+        summary = "Mostrar formulario de registro de aspirante",
+        description = "Devuelve el formulario para registrar un nuevo aspirante junto con los métodos de pago disponibles.",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Formulario de registro mostrado correctamente"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+        }
+    )
     @GetMapping("/nuevo")
     public String mostrarFormularioRegistro(Model model) {
         model.addAttribute("aspirante", new Aspirante());
@@ -35,18 +52,47 @@ public class AspiranteController {
         return "aspirante_form";
     }
 
+
+    @Operation(
+        summary = "Guardar aspirante",
+        description = "Guarda un nuevo aspirante en la base de datos y redirige a la lista de aspirantes.",
+        responses = {
+            @ApiResponse(responseCode = "302", description = "Redirige a la lista de aspirantes"),
+            @ApiResponse(responseCode = "500", description = "Error interno al guardar el aspirante")
+        }
+    )
     @PostMapping("/guardar")
     public String guardarAspirante(@ModelAttribute("aspirante") Aspirante aspirante) {
         aspiranteService.guardarAspirante(aspirante);
         return "redirect:/aspirantes/lista";
     }
 
+
+    @Operation(
+    summary = "Listar aspirantes",
+    description = "Muestra una lista de todos los aspirantes registrados.",
+    responses = {
+        @ApiResponse(responseCode = "200", description = "Lista de aspirantes mostrada correctamente",
+            content = @Content(schema = @Schema(implementation = Aspirante.class))),
+        @ApiResponse(responseCode = "500", description = "Error interno al obtener la lista")
+    }
+    )
     @GetMapping("/lista")
     public String listarAspirantes(Model model) {
         model.addAttribute("aspirantes", aspiranteService.listarAspirantes());
         return "aspirante_lista";
     }
 
+
+    @Operation(
+        summary = "Convertir aspirante a alumno",
+        description = "Convierte un aspirante en alumno, copiando sus datos y eliminando al aspirante.",
+        responses = {
+            @ApiResponse(responseCode = "302", description = "Redirige a la lista de alumnos o aspirantes según el resultado"),
+            @ApiResponse(responseCode = "404", description = "Aspirante no encontrado"),
+            @ApiResponse(responseCode = "500", description = "Error interno al convertir aspirante")
+        }
+    )
     @GetMapping("/convertir/{id}")
     public String convertirAAlumno(@PathVariable Long id) {
         Optional<Aspirante> aspiranteOpt = aspiranteService.obtenerAspirantePorId(id);
