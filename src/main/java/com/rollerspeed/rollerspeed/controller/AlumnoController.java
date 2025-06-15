@@ -1,16 +1,20 @@
 package com.rollerspeed.rollerspeed.controller;
 
 import com.rollerspeed.rollerspeed.service.AlumnoService;
+import com.rollerspeed.rollerspeed.service.UsuarioService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import com.rollerspeed.rollerspeed.model.Alumno;
+import com.rollerspeed.rollerspeed.model.Usuario;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -24,6 +28,10 @@ import java.util.List;
 public class AlumnoController {
 
     private final AlumnoService alumnoService;
+
+    @Autowired
+    private UsuarioService usuarioService;
+    
 
     @Autowired
     public AlumnoController(AlumnoService alumnoService) {
@@ -50,4 +58,15 @@ public class AlumnoController {
         model.addAttribute("alumnos", alumnos);
         return "alumno_lista";
     }
+
+@GetMapping("/dashboard/{id}")
+public String dashboardAlumno(@PathVariable Long id, Model model) {
+    Usuario alumno = usuarioService.getUsuarioById(id).orElse(null);
+    if (alumno == null) {
+        return "redirect:/login?error";
+    }
+    model.addAttribute("alumno", alumno); // Se pasa el objeto completo
+    return "alumno_dashboard";
+}
+
 }
