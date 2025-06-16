@@ -1,5 +1,6 @@
 package com.rollerspeed.rollerspeed.repository;
 
+import java.util.Optional;
 
 
 import com.rollerspeed.rollerspeed.model.Usuario;
@@ -8,5 +9,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
-
+    Optional<Usuario> findByEmail(String email);
 }
