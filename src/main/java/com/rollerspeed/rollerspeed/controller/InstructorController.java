@@ -1,6 +1,7 @@
 package com.rollerspeed.rollerspeed.controller;
 
 import com.rollerspeed.rollerspeed.model.Instructor;
+import com.rollerspeed.rollerspeed.model.Rol;
 import com.rollerspeed.rollerspeed.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -87,6 +88,7 @@ public class InstructorController {
     )
     @PostMapping("/guardar")
     public String guardarInstructor(@ModelAttribute("instructor") Instructor instructor) {
+        
         instructorService.guardarInstructor(instructor);
         return "redirect:/instructores/lista";
     }
